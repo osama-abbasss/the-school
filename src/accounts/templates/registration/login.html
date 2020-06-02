@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block exstra_links %}
+    {% if user.is_authenticated %}
+        <meta http-equiv="REFRESH" content="0;url={{ '/' }}">
+    {% endif %}
+{% endblock  %}
+
+{% block title %}
+My School
+{% endblock title %}
+
+{% block content %}
+<div class="row">
+    <div class=" col-12 col-md-6 father">
+
+        <div class="student"></div>
+        <div class="up">
+            <center>
+                <form class="half" method='post'>{% csrf_token %}               
+                    <div class="form-group ">
+                        <label for="exampleInputEmail1">Email address or Username</label>
+                        <input type="text" name= 'username' class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Password</label>
+                        <input type="password" name='password' class="form-control" id="exampleInputPassword1">
+                    </div>
+                    <button type="submit" class="btn btn-primary">login</button> <br>
+                    <br><a href="{% url 'account:signup' %}"> Signup As Student</a>
+                </form>
+            </center>
+        </div>
+    </div>
+    <div class=" col-12 col-md-6 father">
+        <div class="teacher"></div>
+        <div class="up">
+            <center>
+                <form class="half" method='post'>{% csrf_token %}
+                    <div class="form-group ">
+                        <label for="exampleInputEmail1">Email address or Username</label>
+                        <input type="text" name= 'username' class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Password</label>
+                        <input type="password" name='password' class="form-control" id="exampleInputPassword1">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">login</button><br>
+                    <br><a href="{% url 'account:signup' %}"> Signup As Teacher</a>
+                </form>
+            </center>
+        </div>
+
+    </div>
+</div>
+{% endblock content %}
