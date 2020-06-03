@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from .forms import SignUpForm, ProfileFrom, EditProfile
+from .forms import SignUpForm, ProfileFrom, EditProfileForm
 from .models import EmailConfirm, UserProfile
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
+from files.models import TeacherFile
 
 
 def signup(request):
@@ -61,7 +62,7 @@ def edit_profile(request):
         profile = UserProfile(user=request.user)
 
     if request.method == 'POST':
-        form = EditProfile(request.POST, request.FILES, instance=profile)
+        form = EditProfileForm(request.POST, request.FILES, instance=profile)
         if form.is_valid():
             form.save()
             return redirect('account:profile', username=request.user.username)
@@ -69,7 +70,7 @@ def edit_profile(request):
             messages.info(request, 'sorry something wrong Plz try again')
 
     else:
-        form = EditProfile(instance=profile)
+        form = EditProfileForm(instance=profile)
 
     context = {"form": form}
     template_name = 'accounts/edit_profile_form.html'
@@ -81,6 +82,7 @@ def profile_view(request, username):
     try:
         user = User.objects.get(username=username)
         profile = UserProfile.objects.get(user=user)
+        files = TeacherFile.objects.filter(user=user)
 
     except:
         messages.info(request, 'not found Try again')
@@ -88,7 +90,8 @@ def profile_view(request, username):
 
     template_name = 'accounts/profile.html'
     context = {'profile': profile,
-               'user': user}
+               'user': user,
+               'files': files}
 
     return render(request, template_name, context)
 

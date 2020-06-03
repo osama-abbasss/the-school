@@ -35,16 +35,6 @@ class UserProfile(models.Model):
         return self.user.username
 
 
-'''
-class TeacherFile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    the_file = models.FileField(upload_to='teacher files/')
-    file_name = models.CharField(max_length=60)
-    description = models.TextField()
-    uploaded_at = models.DateTimeField(auto_now_add=True)
-'''
-
-
 class EmailConfirm(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     code = models.CharField(max_length=200, blank=True, null=True)

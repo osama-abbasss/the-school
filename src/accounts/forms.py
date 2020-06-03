@@ -21,7 +21,7 @@ class ProfileFrom(forms.ModelForm):
                   'address', 'Mobail', 'subject', 'year', "description", 'school_name')
 
 
-class EditProfile(forms.ModelForm):
+class EditProfileForm(forms.ModelForm):
 
     class Meta:
         model = UserProfile

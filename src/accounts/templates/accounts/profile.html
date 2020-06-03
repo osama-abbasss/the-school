@@ -41,24 +41,29 @@
 					<div class="col-md-6 ml-auto mr-auto">
                         <div class="profile-tabs">
                           <ul class="nav nav-pills nav-pills-icons justify-content-center" role="tablist">
+
                             <li class="nav-item">
                                 <a class="nav-link active" href="#studio" role="tab" data-toggle="tab">
                                   <i class="material-icons">groups</i>
                                   year
                                 </a>
                             </li>
+                            {% if profile.account_type == 'teacher' %}
                             <li class="nav-item">
                                 <a class="nav-link" href="#works" role="tab" data-toggle="tab">
                                   <i class="material-icons">files</i>
                                     year
                                 </a>
                             </li>
+                            {% endif %}
+
                             <li class="nav-item">
                                 <a class="nav-link" href="#favorite" role="tab" data-toggle="tab">
                                   <i class="material-icons">info</i>
                                     about {{ user.first_name}}
                                 </a>
                             </li>
+
                           </ul>
                         </div>
     	    	</div>
@@ -131,70 +136,29 @@
   				
   			</div>
 
+            {% if profile.account_type == 'teacher' %}
+                <div class="tab-pane text-center gallery" id="works">
 
-            <div class="tab-pane text-center gallery" id="works">
-
-                <div class="row">
-                    <div class="col-sm-6 mb-3">
-                        <div class="card border-success">
-                            <div class="card-body">
-                                <h5 class="card-title">Sgroup name</h5>
-                                <p class="card-text">group discription</p>
-                                <a href="#" class="btn btn-primary">enter</a>
-                                <a href="#" class="btn btn-primary">delete</a>      
-                            </div>
-                            <div class="card-footer">
-                                 <small class="text-muted">Last updated 3 mins ago</small>
+                    <div class="row">
+                    {% for file in files %}
+                        <div class="col-sm-6 mb-3">
+                            <div class="card border-success">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{file.name}}</h5>
+                                    <p class="card-text">{{file.description}}</p>
+                                    <a href="{{ file.the_file.url }}" class="btn btn-primary">open</a>
+                                    <a href="{% url 'files:delete_file' file.name %}" class="btn btn-primary">delete</a>      
                                 </div>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-6 mb-3">
-                        <div class="card border-success">
-                            <div class="card-body">
-                                <h5 class="card-title">Sgroup name</h5>
-                                <p class="card-text">group discription</p>
-                                <a href="#" class="btn btn-primary">enter</a>
-                                <a href="#" class="btn btn-primary">delete</a>      
+                                <div class="card-footer">
+                                    <small class="text-muted">Last updated {{file.uploaded_at}}</small>
+                                    </div>
                             </div>
-                            <div class="card-footer">
-                                 <small class="text-muted">Last updated 3 mins ago</small>
-                                </div>
                         </div>
+                    {% endfor %}
                     </div>
-
-                    <div class="col-sm-6 mb-3">
-                        <div class="card border-success">
-                            <div class="card-body">
-                                <h5 class="card-title">Sgroup name</h5>
-                                <p class="card-text">group discription</p>
-                                <a href="#" class="btn btn-primary">enter</a>
-                                <a href="#" class="btn btn-primary">delete</a>      
-                            </div>
-                            <div class="card-footer">
-                                 <small class="text-muted">Last updated 3 mins ago</small>
-                                </div>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-6 mb-3">
-                        <div class="card border-success">
-                            <div class="card-body">
-                                <h5 class="card-title">Sgroup name</h5>
-                                <p class="card-text">group discription</p>
-                                <a href="#" class="btn btn-primary">enter</a>
-                                <a href="#" class="btn btn-primary">delete</a>      
-                            </div>
-                            <div class="card-footer">
-                                 <small class="text-muted">Last updated 3 mins ago</small>
-                                </div>
-                        </div>
-                    </div>
-
-
+                    
                 </div>
-      			
-  			</div>
+            {% endif %}
 
 
             <div class="tab-pane text-center gallery" id="favorite">
