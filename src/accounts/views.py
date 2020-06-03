@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from .forms import SignUpForm, ProfileFrom
+from .forms import SignUpForm, ProfileFrom, EditProfile
 from .models import EmailConfirm, UserProfile
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
@@ -22,7 +22,7 @@ def signup(request):
                 password = request.POST['password1']
                 new_user = authenticate(username=username, password=password,)
                 login(request, new_user)
-                return redirect("account:profile_form")
+                return redirect("account:create_profile")
             else:
                 messages.info(request, 'sorry something wrong Plz try again')
     context = {"form": form}
@@ -31,7 +31,7 @@ def signup(request):
 
 
 @login_required
-def profile_view(request):
+def create_profile(request):
     try:
         profile = request.user.userprofile
     except UserProfile.DoesNotExist:
@@ -41,7 +41,7 @@ def profile_view(request):
         form = ProfileFrom(request.POST, request.FILES, instance=profile)
         if form.is_valid():
             form.save()
-            return redirect('/')
+            return redirect('account:profile', username=request.user.username)
         else:
             messages.info(request, 'sorry something wrong Plz try again')
 
@@ -50,6 +50,46 @@ def profile_view(request):
 
     context = {"form": form}
     template_name = 'accounts/profile_form.html'
+    return render(request, template_name, context)
+
+
+@login_required
+def edit_profile(request):
+    try:
+        profile = request.user.userprofile
+    except UserProfile.DoesNotExist:
+        profile = UserProfile(user=request.user)
+
+    if request.method == 'POST':
+        form = EditProfile(request.POST, request.FILES, instance=profile)
+        if form.is_valid():
+            form.save()
+            return redirect('account:profile', username=request.user.username)
+        else:
+            messages.info(request, 'sorry something wrong Plz try again')
+
+    else:
+        form = EditProfile(instance=profile)
+
+    context = {"form": form}
+    template_name = 'accounts/edit_profile_form.html'
+    return render(request, template_name, context)
+
+
+@login_required
+def profile_view(request, username):
+    try:
+        user = User.objects.get(username=username)
+        profile = UserProfile.objects.get(user=user)
+
+    except:
+        messages.info(request, 'not found Try again')
+        return redirect("/")
+
+    template_name = 'accounts/profile.html'
+    context = {'profile': profile,
+               'user': user}
+
     return render(request, template_name, context)
 
 

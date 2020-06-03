@@ -8,7 +8,7 @@ from accounts.views import signup
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('home.urls', namespace='home')),
-    path('account/', include('accounts.urls', namespace='account/')),
+    path('', include('accounts.urls', namespace='account/')),
 ]
 
 

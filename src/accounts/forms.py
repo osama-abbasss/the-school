@@ -18,4 +18,12 @@ class ProfileFrom(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ('image', 'account_type', 'city',
-                  'address', 'Mobail', 'subject', 'year')
+                  'address', 'Mobail', 'subject', 'year', "description", 'school_name')
+
+
+class EditProfile(forms.ModelForm):
+
+    class Meta:
+        model = UserProfile
+        fields = ('image', 'city', 'address', 'Mobail',
+                  'subject', 'year', "description", 'school_name')

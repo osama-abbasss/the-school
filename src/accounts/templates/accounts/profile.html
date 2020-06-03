@@ -1,0 +1,211 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block exstra_links %}
+    <link rel="stylesheet" href="{% static 'css/profile.css' %}">
+{% endblock  %}
+
+{% block content %}
+
+
+<body class="profile-page">
+
+    <div class="page-header header-filter" data-parallax="true" style="background-image:url('http://wallpapere.org/wp-content/uploads/2012/02/black-and-white-city-night.png');"></div>
+    <div class="main main-raised">
+		<div class="profile-content">
+            <div class="container">
+                <div class="row">
+	                <div class="col-md-6 ml-auto mr-auto">
+        	           <div class="profile">
+	                        <div class="avatar">
+	                            <img src="{{ profile.image.url }}" alt="Circle Image" class="img-raised rounded-circle img-fluid">
+	                        </div>
+	                        <div class="name">
+	                            <h3 class="title">{{ user.first_name}} {{user.last_name }}</h3>
+								<h6>{{ profile.account_type}} 
+                                    {% if account_type == 'teacher' %}
+                                        {{ profile.subject}} 
+                                    {% endif %}
+                                </h6>
+								<a href="#pablo" class="btn btn-just-icon btn-link btn-dribbble"><i class="fa fa-dribbble"></i></a>
+                                <a href="#pablo" class="btn btn-just-icon btn-link btn-twitter"><i class="fa fa-twitter"></i></a>
+                                <a href="#pablo" class="btn btn-just-icon btn-link btn-pinterest"><i class="fa fa-pinterest"></i></a>
+	                        </div>
+	                    </div>
+    	            </div>
+                </div>
+                <div class="description text-center">
+                    <p>{{ profile.description}} </p>
+                </div>
+				<div class="row">
+					<div class="col-md-6 ml-auto mr-auto">
+                        <div class="profile-tabs">
+                          <ul class="nav nav-pills nav-pills-icons justify-content-center" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#studio" role="tab" data-toggle="tab">
+                                  <i class="material-icons">groups</i>
+                                  year
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#works" role="tab" data-toggle="tab">
+                                  <i class="material-icons">files</i>
+                                    year
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#favorite" role="tab" data-toggle="tab">
+                                  <i class="material-icons">info</i>
+                                    about {{ user.first_name}}
+                                </a>
+                            </li>
+                          </ul>
+                        </div>
+    	    	</div>
+            </div>
+        
+          <div class="tab-content tab-space">
+
+
+            <div class="tab-pane active text-center gallery" id="studio">
+
+                <div class="row">
+                    <div class="col-sm-6 mb-3">
+                        <div class="card border-success">
+                            <div class="card-body">
+                                <h5 class="card-title">Sgroup name</h5>
+                                <p class="card-text">group discription</p>
+                                <a href="#" class="btn btn-primary">enter</a>
+                                <a href="#" class="btn btn-primary">delete</a>      
+                            </div>
+                            <div class="card-footer">
+                                 <small class="text-muted">Last updated 3 mins ago</small>
+                                </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6 mb-3">
+                        <div class="card border-success">
+                            <div class="card-body">
+                                <h5 class="card-title">Sgroup name</h5>
+                                <p class="card-text">group discription</p>
+                                <a href="#" class="btn btn-primary">enter</a>
+                                <a href="#" class="btn btn-primary">delete</a>      
+                            </div>
+                            <div class="card-footer">
+                                 <small class="text-muted">Last updated 3 mins ago</small>
+                                </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6 mb-3">
+                        <div class="card border-success">
+                            <div class="card-body">
+                                <h5 class="card-title">Sgroup name</h5>
+                                <p class="card-text">group discription</p>
+                                <a href="#" class="btn btn-primary">enter</a>
+                                <a href="#" class="btn btn-primary">delete</a>      
+                            </div>
+                            <div class="card-footer">
+                                 <small class="text-muted">Last updated 3 mins ago</small>
+                                </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6 mb-3">
+                        <div class="card border-success">
+                            <div class="card-body">
+                                <h5 class="card-title">Sgroup name</h5>
+                                <p class="card-text">group discription</p>
+                                <a href="#" class="btn btn-primary">enter</a>
+                                <a href="#" class="btn btn-primary">delete</a>      
+                            </div>
+                            <div class="card-footer">
+                                 <small class="text-muted">Last updated 3 mins ago</small>
+                                </div>
+                        </div>
+                    </div>
+
+
+                </div>
+  				
+  			</div>
+
+
+            <div class="tab-pane text-center gallery" id="works">
+
+                <div class="row">
+                    <div class="col-sm-6 mb-3">
+                        <div class="card border-success">
+                            <div class="card-body">
+                                <h5 class="card-title">Sgroup name</h5>
+                                <p class="card-text">group discription</p>
+                                <a href="#" class="btn btn-primary">enter</a>
+                                <a href="#" class="btn btn-primary">delete</a>      
+                            </div>
+                            <div class="card-footer">
+                                 <small class="text-muted">Last updated 3 mins ago</small>
+                                </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6 mb-3">
+                        <div class="card border-success">
+                            <div class="card-body">
+                                <h5 class="card-title">Sgroup name</h5>
+                                <p class="card-text">group discription</p>
+                                <a href="#" class="btn btn-primary">enter</a>
+                                <a href="#" class="btn btn-primary">delete</a>      
+                            </div>
+                            <div class="card-footer">
+                                 <small class="text-muted">Last updated 3 mins ago</small>
+                                </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6 mb-3">
+                        <div class="card border-success">
+                            <div class="card-body">
+                                <h5 class="card-title">Sgroup name</h5>
+                                <p class="card-text">group discription</p>
+                                <a href="#" class="btn btn-primary">enter</a>
+                                <a href="#" class="btn btn-primary">delete</a>      
+                            </div>
+                            <div class="card-footer">
+                                 <small class="text-muted">Last updated 3 mins ago</small>
+                                </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6 mb-3">
+                        <div class="card border-success">
+                            <div class="card-body">
+                                <h5 class="card-title">Sgroup name</h5>
+                                <p class="card-text">group discription</p>
+                                <a href="#" class="btn btn-primary">enter</a>
+                                <a href="#" class="btn btn-primary">delete</a>      
+                            </div>
+                            <div class="card-footer">
+                                 <small class="text-muted">Last updated 3 mins ago</small>
+                                </div>
+                        </div>
+                    </div>
+
+
+                </div>
+      			
+  			</div>
+
+
+            <div class="tab-pane text-center gallery" id="favorite">
+
+      		</div>
+          </div>
+
+        
+            </div>
+        </div>
+	</div>
+	
+</body>
+{% endblock content %}

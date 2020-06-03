@@ -21,16 +21,28 @@ class UserProfile(models.Model):
     image = models.ImageField(upload_to='profile/')
 
     account_type = models.CharField(
-        max_length=10, choices=PRO_TYPE, verbose_name='you are a ')
+        max_length=10, choices=PRO_TYPE, verbose_name='you are a *can\'t change later*  ')
 
     city = models.CharField(max_length=30, choices=CITIES)
     address = models.CharField(max_length=60)
     Mobail = models.CharField(max_length=12)
-    subject = models.CharField(max_length=60)
+    subject = models.CharField(max_length=60, blank=True, null=True)
+    description = models.TextField()
+    school_name = models.CharField(max_length=160)
     year = models.CharField(max_length=60)
 
     def __str__(self):
         return self.user.username
+
+
+'''
+class TeacherFile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    the_file = models.FileField(upload_to='teacher files/')
+    file_name = models.CharField(max_length=60)
+    description = models.TextField()
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+'''
 
 
 class EmailConfirm(models.Model):
