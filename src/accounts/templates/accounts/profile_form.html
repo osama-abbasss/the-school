@@ -1,6 +1,12 @@
 {% extends 'base.html' %}
 {% load bootstrap4 %}
 
+{% block exstra_links %}
+    {% if user.userprofile.account_type %}
+        <meta http-equiv="REFRESH" content="0;url={{ '/' }}">
+    {% endif %}
+{% endblock  %}
+
 
 {% block content %}
 <div class="container">

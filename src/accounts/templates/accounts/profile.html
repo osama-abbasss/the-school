@@ -84,6 +84,8 @@
 
                                 {% if request.user in group.members.all %}
                                     <a href="{% url 'groups:group_details' group.slug %}" class="btn btn-primary">enter</a>
+                                {% else %}
+                                    <a href="{% url 'groups:join_group' group.slug %}" class="btn btn-primary">join</a>
                                 {% endif %}
 
                                 {% if group.auther == request.user %}

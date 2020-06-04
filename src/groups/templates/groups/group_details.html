@@ -1,1 +1,6 @@
 {% extends 'base.html' %}
+
+
+{% block content %}
+    <a href="{% url 'groups:leave_group' group.slug %}" class="btn btn-danger">leave</a>
+{% endblock content %}
