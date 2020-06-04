@@ -83,8 +83,31 @@
       </div>
     </div>
   </nav>
+  {% if messages %}   
+    {% for message in messages %}
+      <div {% if message.tags %} class="alert alert-{{ message.tags }}" {%else %} class="alert alert-info" {% endif %}role="alert">
+        {{ message }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    {% endfor %}
+  {% endif %}
+
+  {% if not user.emailconfirm.confirmed and user.is_authenticated%}
+  <div class="alert alert-danger" role="alert">
+    please active your email
+  </div>
+  {% endif %}
 
   {% block content %}
+    {% if messages %}
+      <ul class="messages">
+          {% for message in messages %}
+          <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+          {% endfor %}
+      </ul>
+    {% endif %}
 
   {% endblock %}
 

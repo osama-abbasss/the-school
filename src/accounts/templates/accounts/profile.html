@@ -45,14 +45,14 @@
                             <li class="nav-item">
                                 <a class="nav-link active" href="#studio" role="tab" data-toggle="tab">
                                   <i class="material-icons">groups</i>
-                                  year
+                                  {{ groups.count  }} groups
                                 </a>
                             </li>
                             {% if profile.account_type == 'teacher' %}
                             <li class="nav-item">
                                 <a class="nav-link" href="#works" role="tab" data-toggle="tab">
                                   <i class="material-icons">files</i>
-                                    year
+                                    {{ files.count }} files
                                 </a>
                             </li>
                             {% endif %}
@@ -75,62 +75,27 @@
             <div class="tab-pane active text-center gallery" id="studio">
 
                 <div class="row">
+                {% for group in groups%}
                     <div class="col-sm-6 mb-3">
                         <div class="card border-success">
                             <div class="card-body">
-                                <h5 class="card-title">Sgroup name</h5>
-                                <p class="card-text">group discription</p>
-                                <a href="#" class="btn btn-primary">enter</a>
-                                <a href="#" class="btn btn-primary">delete</a>      
+                                <h5 class="card-title">{{ group.name }}</h5>
+                                <p class="card-text">{{ group.description }}</p>
+
+                                {% if request.user in group.members.all %}
+                                    <a href="{% url 'groups:group_details' group.slug %}" class="btn btn-primary">enter</a>
+                                {% endif %}
+
+                                {% if group.auther == request.user %}
+                                    <a href="{% url 'groups:delete_group' group.slug %}" class="btn btn-primary">delete</a> 
+                                {% endif %}     
                             </div>
                             <div class="card-footer">
-                                 <small class="text-muted">Last updated 3 mins ago</small>
+                                 <small class="text-muted">students : {{ group.members.count }}</small>
                                 </div>
                         </div>
                     </div>
-
-                    <div class="col-sm-6 mb-3">
-                        <div class="card border-success">
-                            <div class="card-body">
-                                <h5 class="card-title">Sgroup name</h5>
-                                <p class="card-text">group discription</p>
-                                <a href="#" class="btn btn-primary">enter</a>
-                                <a href="#" class="btn btn-primary">delete</a>      
-                            </div>
-                            <div class="card-footer">
-                                 <small class="text-muted">Last updated 3 mins ago</small>
-                                </div>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-6 mb-3">
-                        <div class="card border-success">
-                            <div class="card-body">
-                                <h5 class="card-title">Sgroup name</h5>
-                                <p class="card-text">group discription</p>
-                                <a href="#" class="btn btn-primary">enter</a>
-                                <a href="#" class="btn btn-primary">delete</a>      
-                            </div>
-                            <div class="card-footer">
-                                 <small class="text-muted">Last updated 3 mins ago</small>
-                                </div>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-6 mb-3">
-                        <div class="card border-success">
-                            <div class="card-body">
-                                <h5 class="card-title">Sgroup name</h5>
-                                <p class="card-text">group discription</p>
-                                <a href="#" class="btn btn-primary">enter</a>
-                                <a href="#" class="btn btn-primary">delete</a>      
-                            </div>
-                            <div class="card-footer">
-                                 <small class="text-muted">Last updated 3 mins ago</small>
-                                </div>
-                        </div>
-                    </div>
-
+                {% endfor %}
 
                 </div>
   				

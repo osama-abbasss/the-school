@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from files.models import TeacherFile
+from groups.models import Group
 
 
 def signup(request):
@@ -81,6 +82,7 @@ def edit_profile(request):
 def profile_view(request, username):
     try:
         user = User.objects.get(username=username)
+        groups = Group.objects.filter(auther=user)
         profile = UserProfile.objects.get(user=user)
         files = TeacherFile.objects.filter(user=user)
 
@@ -91,7 +93,8 @@ def profile_view(request, username):
     template_name = 'accounts/profile.html'
     context = {'profile': profile,
                'user': user,
-               'files': files}
+               'files': files,
+               'groups': groups}
 
     return render(request, template_name, context)
 
