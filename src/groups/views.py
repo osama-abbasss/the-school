@@ -1,9 +1,12 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Group, GroupMember
-from .forms import GroupForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth.models import User
+
+from .models import Group, GroupMember
+from .forms import GroupForm
+from posts.models import Post
+from posts.forms import PostForm, CommentForm
 
 
 @login_required
@@ -40,8 +43,62 @@ def group_details(request, slug):
     if request.user not in group.members.all():
         messages.warning(request, 'the group private for members only')
         return redirect('/')
+
+    # create posts and comments in group
+    else:
+        if request.method == 'POST':
+            post_like = request.POST.get('post_like')
+            post_dislike = request.POST.get('post_dislike')
+
+            post_form = PostForm(request.POST)
+            comment_form = CommentForm(request.POST)
+
+            try:
+                # the post which come with comment form
+                post_id = request.POST.get('post_id')
+                the_comment = request.POST.get('comment')
+                the_post = Post.objects.get(id=post_id)
+            except:
+                pass
+
+            # create post
+            if post_form.is_valid():
+                post = post_form.save(commit=False)
+                post.user = request.user
+                post.group = group
+                post.save()
+
+                return redirect('groups:group_details', group.slug)
+
+            # create comment
+
+            elif comment_form.is_valid():
+                comment = comment_form.save(commit=False)
+                comment.post = the_post
+                comment.user = request.user
+                comment.comment = the_comment
+                comment.save()
+
+            # like post
+
+            elif post_like:
+                post = get_object_or_404(Post, id=post_like)
+                post.likes.add(request.user)
+
+            # dislike post
+            elif post_dislike:
+                post = get_object_or_404(Post, id=post_dislike)
+                post.likes.remove(request.user)
+
+    posts = Post.objects.filter(group=group).order_by('-created_at')
+
+    post_form = PostForm()
     template_name = 'groups/group_details.html'
-    context = {'group': group}
+    context = {
+        'group': group,
+        'post_form': post_form,
+        'posts': posts
+    }
 
     return render(request, template_name, context)
 

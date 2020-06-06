@@ -10,6 +10,7 @@ urlpatterns = [
     path('', include('accounts.urls', namespace='account')),
     path('file/', include('files.urls', namespace='files')),
     path('group/', include('groups.urls', namespace='groups')),
+    path('post/', include('posts.urls', namespace='posts')),
 ]
 
 
