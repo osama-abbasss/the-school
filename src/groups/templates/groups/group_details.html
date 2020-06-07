@@ -1,74 +1,125 @@
 {% extends 'base.html' %}
 {% load bootstrap4 %}
+{% block exstra_links %}
+<style>
+.p-3 {
+    padding: 0rem!important;
+}
+
+
+.mb-5, .my-5 {
+    margin-bottom: 5px!important;
+}
+.bkg{
+    background-color: lightgray;
+}
+</style>
+{% endblock exstra_links %}
 
 
 {% block content %}
 
-<div class='row'>
-    <div class='col-md-3 col-12'>
-        <center>
-            <a href="{% url 'groups:leave_group' group.slug %}" class="btn btn-danger mt-2">leave</a> <br>
-            <h3> group members: </h3>
-            {% for member in group.members.all %}
-            {{ member.username }}
-            {% endfor %}
+<div class="row">
 
-        </center>
-    </div>
-
-    <div class='col-12 col-md-9'>
-
-        <center>
-
+      <div class="col-12 col-md-9">
+        <div class="container mt-2">
             <form method='post'>
                 {% csrf_token %}
-                {% bootstrap_form post_form %}
-
-                {% buttons %}
-                <button type="submit" class="btn btn-primary">share</button>
-                {% endbuttons %}
+                <div class="card text-center shadow-sm p-3 mb-5 bg-white rounded border border-info">
+                    <div class="card-header">
+                        share posts
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                        <textarea class="form-control" id="exampleFormControlTextarea1" name='content' rows="3"></textarea>
+                        </div>
+                    </div>
+                    <div class="card-footer text-muted">
+                        <button type="submit" class="btn btn-primary btn-lg btn-block" name="button"> share </button>
+                    </div>
+                </div>
             </form>
+            <hr>
+              <h4 class="text-center"> Group Posts </h4>
+            <hr>
 
             {% for post in posts %}
+            
+                <div class="card border border-success mb-3">
 
-                <div class="jumbotron">
-                    <h1 class="display-4">{{ post.content }}</h1>
-                    {% if request.user in post.likes.all %}
+                    <div class="card-header">
+                        {{ post.user.first_name }} {{ post.user.last_name }} <small class="text-muted float-right">{{ post.created_at|date:"j b Y  g:i A" }}</small>
+                    </div>
+
+                    <div class="card-body">
+
+                        <p class="card-text"> {{ post.content }}</p>
+
+                        {% if request.user in post.likes.all %}
+                            <form method='post'>
+                                {% csrf_token %}
+
+                                <input type="text" value="{{ post.id }}" name ='post_dislike' hidden>
+                                <button type="submit" class="btn btn-danger btn-lg btn-block">{{ post.likes.count }}  <i class="fas fa-thumbs-down"></i></button>
+                            </form>
+
+                        {% else %}
+                            <form method='post'>
+                                {% csrf_token %}
+
+                                <input type="text" value="{{ post.id }}" name ='post_like' hidden>
+                                <button type="submit" class="btn btn-primary btn-lg btn-block">{{ post.likes.count }}  <i class="far fa-thumbs-up"></i></button>
+                            </form>
+                        {% endif %}
+
+                        <hr class="my-4">
                         <form method='post'>
                             {% csrf_token %}
-
-                            <input type="text" value="{{ post.id }}" name ='post_dislike' hidden>
-                            <button type="submit" class="btn btn-danger btn-lg btn-block">{{ post.likes.count }} <i class="fas fa-thumbs-down"></i></button>
+                            <div class="input-group">
+                                <input type="text" value="{{ post.id }}" name ='post_id' hidden>
+                                <textarea class="form-control rounded-pill" name="comment" aria-label="With textarea"></textarea> &nbsp;
+                                <div class="input-group-prepend">
+                                <button type="submit" class="input-group-text rounded-pill badge-dark" name="button"> comment</button>
+                                </div>
+                            </div>
                         </form>
+                        <hr>
+                        {% for comment in post.comment_set.all %}
+                            <div class="card shadow p-3 mb-5 bg-white rounded rounded-pill mb-5 bkg">
+                                <div class="card-body rounded-pill bkg">
+                                <h5> by: {{  comment.user.first_name }} {{  comment.user.last_name }}  <small class="text-muted float-right">{{ comment.created_at|date:"j b Y  g:i A"}}</small> </h5>
+                                <p> {{comment.comment}} </p>
+                                </div>
+                            </div>
+                            <hr>
+                        {% endfor %}
 
-                    {% else %}
-                        <form method='post'>
-                            {% csrf_token %}
+                    </div>
 
-                            <input type="text" value="{{ post.id }}" name ='post_like' hidden>
-                            <button type="submit" class="btn btn-primary btn-lg btn-block">{{ post.likes.count }} <i class="far fa-thumbs-up"></i></button>
-                        </form>
-                    {% endif %}
-                    <hr class="my-4">
-
-                    {% for comment in post.comment_set.all %}
-                        <p> {{ comment.comment }} </p>
-                    {% endfor %}
-                    <form method='post'>
-                        {% csrf_token %}
-                        <input type="text" name='comment'>
-                        <input type="text" value="{{ post.id }}" name ='post_id' hidden>
-                        <button type="submit" class="btn btn-primary">comment</button>
-                    </form>
                 </div>
 
             {% endfor %}
+        </div>
+      </div>
+      <div class="col-12 col-md-3">
+        <a href="{% url 'groups:leave_group' group.slug %}" class="btn btn-danger btn-lg btn-block mt-2">leave group</a>
 
-        </center>
+        <table class="table table-hover mt-3">
+          <tbody>
+            {% for member in group.members.all %}
+                <tr>
+                <td colspan="2">{{ member.first_name }} {{ member.last_name }}</td>
+                {% if request.user == group.auther %}
+                    <td> <a href="{% url 'groups:remove_member' group.slug member.username %}" class="btn btn-outline-danger float-right"> remove</a></td>
+                {% endif %}
+                </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+
+      </div>
 
     </div>
-
-</div>
 
 
 {% endblock content %}

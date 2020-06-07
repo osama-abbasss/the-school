@@ -51,6 +51,8 @@ def group_details(request, slug):
             post_dislike = request.POST.get('post_dislike')
 
             post_form = PostForm(request.POST)
+            post_content = request.POST.get('content')
+
             comment_form = CommentForm(request.POST)
 
             try:
@@ -58,6 +60,7 @@ def group_details(request, slug):
                 post_id = request.POST.get('post_id')
                 the_comment = request.POST.get('comment')
                 the_post = Post.objects.get(id=post_id)
+
             except:
                 pass
 
@@ -66,6 +69,7 @@ def group_details(request, slug):
                 post = post_form.save(commit=False)
                 post.user = request.user
                 post.group = group
+                post.content = post_content
                 post.save()
 
                 return redirect('groups:group_details', group.slug)
