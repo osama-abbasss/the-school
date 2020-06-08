@@ -45,14 +45,13 @@
                             <li class="nav-item">
                                 <a class="nav-link active" href="#studio" role="tab" data-toggle="tab">
                                   <i class="material-icons">groups</i>
-                                  {{ groups.count  }} groups
+
                                 </a>
                             </li>
                             {% if profile.account_type == 'teacher' %}
                             <li class="nav-item">
                                 <a class="nav-link" href="#works" role="tab" data-toggle="tab">
                                   <i class="material-icons">files</i>
-                                    {{ files.count }} files
                                 </a>
                             </li>
                             {% endif %}
@@ -60,7 +59,6 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="#favorite" role="tab" data-toggle="tab">
                                   <i class="material-icons">info</i>
-                                    about {{ user.first_name}}
                                 </a>
                             </li>
 
@@ -75,30 +73,65 @@
             <div class="tab-pane active text-center gallery" id="studio">
 
                 <div class="row">
-                {% for group in groups%}
-                    <div class="col-sm-6 mb-3">
-                        <div class="card border-success">
-                            <div class="card-body">
-                                <h5 class="card-title">{{ group.name }}</h5>
-                                <p class="card-text">{{ group.description }}</p>
 
-                                {% if request.user in group.members.all %}
-                                    <a href="{% url 'groups:group_details' group.slug %}" class="btn btn-primary">enter</a>
-                                {% else %}
-                                    <a href="{% url 'groups:join_group' group.slug %}" class="btn btn-primary">join</a>
-                                {% endif %}
+                    {% if profile.account_type == 'teacher' %}
 
-                                {% if group.auther == request.user %}
-                                    <a href="{% url 'groups:delete_group' group.slug %}" class="btn btn-primary">delete</a> 
-                                {% endif %}     
-                            </div>
-                            <div class="card-footer">
-                                 <small class="text-muted">students : {{ group.members.count }}</small>
+                        {% for group in teacher_groups%}  
+                            <div class="col-sm-6 mb-3">
+                                <div class="card border-success">
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{ group.name }}</h5>
+                                        <p class="card-text">{{ group.description }}</p>
+
+                                        {% if request.user in group.members.all %}
+                                            <a href="{% url 'groups:group_details' group.slug %}" class="btn btn-primary">enter</a>
+                                        {% else %}
+                                            <a href="{% url 'groups:join_group' group.slug %}" class="btn btn-primary">join</a>
+                                        {% endif %}
+
+                                        {% if group.auther == request.user %}
+                                            <a href="{% url 'groups:delete_group' group.slug %}" class="btn btn-primary">delete</a> 
+                                        {% endif %}     
+                                    </div>
+                                    <div class="card-footer">
+                                        <small class="text-muted">students : {{ group.members.count }}</small>
+                                        </div>
                                 </div>
-                        </div>
-                    </div>
-                {% endfor %}
+                            </div>
+                        {% endfor %}
 
+                    {% else %}
+
+                        {% for group in groups %}
+                             
+                            {{username.user}}
+                            {% if user in group.members.all %} 
+                                <div class="col-sm-6 mb-3">
+                                    <div class="card border-success">
+                                        <div class="card-body">
+                                            <h5 class="card-title">{{ group.name }}</h5>
+                                            <p class="card-text">{{ group.description }}</p>
+
+                                            {% if request.user in group.members.all %}
+                                                <a href="{% url 'groups:group_details' group.slug %}" class="btn btn-primary">enter</a>
+                                            {% else %}
+                                                <a href="{% url 'groups:join_group' group.slug %}" class="btn btn-primary">join</a>
+                                            {% endif %}
+
+                                            {% if group.auther == request.user %}
+                                                <a href="{% url 'groups:delete_group' group.slug %}" class="btn btn-primary">delete</a> 
+                                            {% endif %}     
+                                        </div>
+                                        <div class="card-footer">
+                                            <small class="text-muted">students : {{ group.members.count }}</small>
+                                            </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+
+                    {% endif %}
+                        
                 </div>
   				
   			</div>
@@ -129,7 +162,53 @@
 
 
             <div class="tab-pane text-center gallery" id="favorite">
+                <table class="table table-borderless">
+                    <tbody>
 
+                        <tr>
+                            <td >name</td>
+                            <td class="text-primary" ><b>{{ user.first_name }} <b>{{ user.last_name }}</b></b></td>
+                        </tr>
+
+                        <tr>
+                            <td >Email</td>
+                            <td class="text-primary" ><b>{{ user.email }}</b></td>
+                        </tr>
+
+                        <tr>
+                            <td> mobail number</td>
+                            <td class="text-primary" ><b>{{ profile.Mobail }}</b></td>
+                        </tr>
+
+                        <tr>
+                            <td>city</td>
+                            <td class="text-primary" ><b>{{ profile.city }}</b></td>
+                        </tr>
+
+                        <tr>
+                            <td>address</td>
+                            <td class="text-primary" ><b>{{ profile.address }}</b></td>
+                        </tr>
+
+                        
+
+                        <tr>
+                            <td>subject/s</td>
+                            <td class="text-primary" ><b>{{ profile.subject }}</b></td>
+                        </tr>
+
+                        <tr>
+                            <td>school name</td>
+                            <td class="text-primary" ><b>{{ profile.school_name }}</b></td>
+                        </tr>
+
+                        <tr>
+                            <td>year</td>
+                            <td class="text-primary" ><b>{{ profile.year }}</b></td>
+                        </tr>
+
+                    </tbody>
+                </table>
       		</div>
           </div>
 

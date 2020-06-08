@@ -87,7 +87,7 @@
                         {% for comment in post.comment_set.all %}
                             <div class="card shadow p-3 mb-5 bg-white rounded rounded-pill mb-5 bkg">
                                 <div class="card-body rounded-pill bkg">
-                                <h5> by: {{  comment.user.first_name }} {{  comment.user.last_name }}  <small class="text-muted float-right">{{ comment.created_at|date:"j b Y  g:i A"}}</small> </h5>
+                                <h5 class='ml-3'><a href="{% url 'account:profile' comment.user.username %}" class="alert-link" > {{  comment.user.first_name }} {{  comment.user.last_name }} </a> <small class="text-muted float-right mr-3">{{ comment.created_at|date:"j b Y  g:i A"}}</small> </h5>
                                 <p> {{comment.comment}} </p>
                                 </div>
                             </div>

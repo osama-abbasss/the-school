@@ -80,9 +80,11 @@ def edit_profile(request):
 
 @login_required
 def profile_view(request, username):
+
     try:
         user = User.objects.get(username=username)
-        groups = Group.objects.filter(auther=user)
+        teacher_groups = Group.objects.filter(auther=user)
+        groups = Group.objects.all()
         profile = UserProfile.objects.get(user=user)
         files = TeacherFile.objects.filter(user=user)
 
@@ -91,17 +93,19 @@ def profile_view(request, username):
         return redirect("/")
 
     template_name = 'accounts/profile.html'
+
     context = {'profile': profile,
                'user': user,
                'files': files,
-               'groups': groups}
+               'teacher_groups': teacher_groups,
+               'groups': groups,
+               'username': username}
 
     return render(request, template_name, context)
 
 
 def account_activated(request, code):
-    print(code)
-    print(request.user)
+
     try:
         email_confirm = EmailConfirm.objects.get(user=request.user, code=code)
         if email_confirm:

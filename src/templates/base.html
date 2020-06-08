@@ -54,8 +54,9 @@
           </li>
 
         </ul>
-        <form class="form-inline my-2 my-lg-0 mr-auto">
-          <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+
+        <form class="form-inline my-2 my-lg-0 mr-auto" action='/serach/' method='post'> {% csrf_token %}
+          <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name='q'>
           <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form>
 
@@ -67,7 +68,7 @@
               <i class="fas fa-user"></i> profile
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            {% if user.is_authenticated %}
+            {% if request.user.is_authenticated %}
               <a class="dropdown-item" href="{% url 'account:profile' user.username %}">profile</a>
               <a class="dropdown-item" href="{% url 'account:edit_profile' %}">edit</a>
               <a class="dropdown-item" href="{% url 'account:logout' %}">logout</a>
@@ -94,7 +95,7 @@
     {% endfor %}
   {% endif %}
 
-  {% if not user.emailconfirm.confirmed and user.is_authenticated%}
+  {% if not request.user.emailconfirm.confirmed and request.user.is_authenticated%}
   <div class="alert alert-danger" role="alert">
     please active your email
   </div>

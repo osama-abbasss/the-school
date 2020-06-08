@@ -11,6 +11,8 @@ urlpatterns = [
     path('file/', include('files.urls', namespace='files')),
     path('group/', include('groups.urls', namespace='groups')),
     path('post/', include('posts.urls', namespace='posts')),
+    path('serach/', include('searches.urls', namespace='searches')),
+    path('blog/', include('blog.urls', namespace='blog')),
 ]
 
 
