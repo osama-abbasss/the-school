@@ -2,17 +2,19 @@
 {% load bootstrap4 %}
 {% block exstra_links %}
 <style>
-.p-3 {
-    padding: 0rem!important;
-}
+    .p-3 {
+        padding: 0rem !important;
+    }
 
 
-.mb-5, .my-5 {
-    margin-bottom: 5px!important;
-}
-.bkg{
-    background-color: lightgray;
-}
+    .mb-5,
+    .my-5 {
+        margin-bottom: 5px !important;
+    }
+
+    .bkg {
+        background-color: lightgray;
+    }
 </style>
 {% endblock exstra_links %}
 
@@ -21,9 +23,9 @@
 
 <div class="row">
 
-      <div class="col-12 col-md-9">
+    <div class="col-12 col-md-9">
         <div class="container mt-2">
-            <form method='post'>
+            <form method='post' id='post_form'>
                 {% csrf_token %}
                 <div class="card text-center shadow-sm p-3 mb-5 bg-white rounded border border-info">
                     <div class="card-header">
@@ -31,7 +33,7 @@
                     </div>
                     <div class="card-body">
                         <div class="form-group">
-                        <textarea class="form-control" id="exampleFormControlTextarea1" name='content' rows="3"></textarea>
+                            <textarea class="form-control" id="post_content" name='content' rows="3"></textarea>
                         </div>
                     </div>
                     <div class="card-footer text-muted">
@@ -40,86 +42,168 @@
                 </div>
             </form>
             <hr>
-              <h4 class="text-center"> Group Posts </h4>
+            <h4 class="text-center"> Group Posts </h4>
             <hr>
 
             {% for post in posts %}
-            
-                <div class="card border border-success mb-3">
 
-                    <div class="card-header">
-                        {{ post.user.first_name }} {{ post.user.last_name }} <small class="text-muted float-right">{{ post.created_at|date:"j b Y  g:i A" }}</small>
-                    </div>
+            <div class="card border border-success mb-3" id="post_content">
 
-                    <div class="card-body">
+                <div class="card-header">
+                    {{ post.user.first_name }} {{ post.user.last_name }} <small
+                        class="text-muted float-right">{{ post.created_at|date:"j b Y  g:i A" }}</small>
+                </div>
 
-                        <p class="card-text"> {{ post.content }}</p>
+                <div class="card-body">
 
-                        {% if request.user in post.likes.all %}
-                            <form method='post'>
-                                {% csrf_token %}
+                    <p class="card-text"> {{ post.content }}</p>
 
-                                <input type="text" value="{{ post.id }}" name ='post_dislike' hidden>
-                                <button type="submit" class="btn btn-danger btn-lg btn-block">{{ post.likes.count }}  <i class="fas fa-thumbs-down"></i></button>
-                            </form>
+                    {% if request.user in post.likes.all %}
+                    <form method='post' id="dislike_form">
+                        {% csrf_token %}
+                        <input type="text" value="{{ post.id }}" name='post_dislike' id='dislike' hidden>
+                        <button type="submit" class="btn btn-danger btn-lg btn-block">{{ post.likes.count }} <i
+                                class="fas fa-thumbs-down"></i></button>
+                    </form>
 
-                        {% else %}
-                            <form method='post'>
-                                {% csrf_token %}
+                    {% else %}
+                    <form method='post' id="like_form">
+                        {% csrf_token %}
 
-                                <input type="text" value="{{ post.id }}" name ='post_like' hidden>
-                                <button type="submit" class="btn btn-primary btn-lg btn-block">{{ post.likes.count }}  <i class="far fa-thumbs-up"></i></button>
-                            </form>
-                        {% endif %}
+                        <input type="text" value="{{ post.id }}" name='post_like' id='like' hidden>
+                        <button type="submit" class="btn btn-primary btn-lg btn-block">{{ post.likes.count }} <i
+                                class="far fa-thumbs-up"></i></button>
+                    </form>
+                    {% endif %}
 
-                        <hr class="my-4">
-                        <form method='post'>
-                            {% csrf_token %}
-                            <div class="input-group">
-                                <input type="text" value="{{ post.id }}" name ='post_id' hidden>
-                                <textarea class="form-control rounded-pill" name="comment" aria-label="With textarea"></textarea> &nbsp;
-                                <div class="input-group-prepend">
-                                <button type="submit" class="input-group-text rounded-pill badge-dark" name="button"> comment</button>
-                                </div>
+                    <hr class="my-4">
+                    <form method='post' id="comment_form">
+                        {% csrf_token %}
+                        <div class="input-group">
+                            <input type="text" value="{{ post.id }}" name='post_id' id="comment_post" hidden>
+                            <textarea class="form-control rounded-pill" name="comment" id="comment_text"
+                                aria-label="With textarea"></textarea> &nbsp;
+                            <div class="input-group-prepend">
+                                <button type="submit" id="submit" class="input-group-text rounded-pill badge-dark"
+                                    name="button">
+                                    comment</button>
                             </div>
-                        </form>
-                        <hr>
-                        {% for comment in post.comment_set.all %}
-                            <div class="card shadow p-3 mb-5 bg-white rounded rounded-pill mb-5 bkg">
-                                <div class="card-body rounded-pill bkg">
-                                <h5 class='ml-3'><a href="{% url 'account:profile' comment.user.username %}" class="alert-link" > {{  comment.user.first_name }} {{  comment.user.last_name }} </a> <small class="text-muted float-right mr-3">{{ comment.created_at|date:"j b Y  g:i A"}}</small> </h5>
-                                <p> {{comment.comment}} </p>
-                                </div>
-                            </div>
-                            <hr>
-                        {% endfor %}
-
+                        </div>
+                    </form>
+                    <hr>
+                    {% for comment in post.comment_set.all %}
+                    <div class="card shadow p-3 mb-5 bg-white rounded rounded-pill mb-5 bkg">
+                        <div class="card-body rounded-pill bkg">
+                            <h5 class='ml-3'><a href="{% url 'account:profile' comment.user.username %}"
+                                    class="alert-link"> {{  comment.user.first_name }} {{  comment.user.last_name }}
+                                </a> <small
+                                    class="text-muted float-right mr-3">{{ comment.created_at|date:"j b Y  g:i A"}}</small>
+                            </h5>
+                            <p> {{comment.comment}} </p>
+                        </div>
                     </div>
+                    <hr>
+                    {% endfor %}
 
                 </div>
 
+            </div>
+
             {% endfor %}
         </div>
-      </div>
-      <div class="col-12 col-md-3">
+    </div>
+    <div class="col-12 col-md-3">
         <a href="{% url 'groups:leave_group' group.slug %}" class="btn btn-danger btn-lg btn-block mt-2">leave group</a>
 
         <table class="table table-hover mt-3">
-          <tbody>
-            {% for member in group.members.all %}
+            <tbody>
+                {% for member in group.members.all %}
                 <tr>
-                <td colspan="2">{{ member.first_name }} {{ member.last_name }}</td>
-                {% if request.user == group.auther %}
-                    <td> <a href="{% url 'groups:remove_member' group.slug member.username %}" class="btn btn-outline-danger float-right"> remove</a></td>
-                {% endif %}
+                    <td colspan="2">{{ member.first_name }} {{ member.last_name }}</td>
+                    {% if request.user == group.auther %}
+                    <td> <a id='remove' href="{% url 'groups:remove_member' group.slug member.username %}"
+                            class="btn btn-outline-danger float-right"> remove</a></td>
+                    {% endif %}
                 </tr>
-            {% endfor %}
-          </tbody>
+                {% endfor %}
+            </tbody>
         </table>
-
-      </div>
 
     </div>
 
+</div>
+
 
 {% endblock content %}
+
+
+{% block exstra_scripts %}
+    <script type="text/javascript">
+        var g_url = '{% url "groups:group_details" group.slug %}'
+        $(document).on('submit', "#comment_form", function (e) {
+            e.preventDefault();
+            $.ajax({
+                type: 'POST',
+                url: g_url,
+                data: {
+                    post_id: $('#comment_post').val(),
+                    comment: $('#comment_text').val(),
+                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+                },
+
+                success: function (data) {
+                    $("html").html(data);
+                }
+            })
+        });
+
+        $(document).on('submit', "#post_form", function (e) {
+            e.preventDefault();
+            $.ajax({
+                type: 'POST',
+                url: g_url,
+                data: {
+                    content: $('#post_content').val(),
+                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+                },
+
+                success: function (data) {
+                    $("html").html(data);
+                }
+            })
+        });
+
+        $(document).on('submit', "#like_form", function (e) {
+            e.preventDefault();
+            $.ajax({
+                type: 'POST',
+                url: g_url,
+                data: {
+                    post_like: $('#like').val(),
+                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+                },
+
+                success: function (data) {
+                    $("html").html(data);
+                }
+            })
+        });
+
+        $(document).on('submit', "#dislike_form", function (e) {
+            e.preventDefault();
+            $.ajax({
+                type: 'POST',
+                url: g_url,
+                data: {
+                    post_dislike: $('#dislike').val(),
+                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+                },
+
+                success: function (data) {
+                    $("html").html(data);
+                }
+            })
+        });
+
+    </script>
+{% endblock exstra_scripts %}

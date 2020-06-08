@@ -1,7 +1,37 @@
 {% extends 'base.html' %}
+{% block exstra_links %}
+<style>
+a{
+    text-decoration: none; 
+    text-decoration-line: none;
+}
+</style>
+
+{% endblock exstra_links %}
 
 {% block content %}
     {% for blog in object_list %}
-        {{ blog.name}}
+    <div class='container'>
+        
+            <div class="card m-3">
+                <div class="row no-gutters">
+                    <div class="col-md-4">
+                        <a href="{% url 'blog:blog_detail' blog.slug%}" >
+                            <img src="{{blog.img.url}}" class="card-img" alt="blog image">
+                        </a> 
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <a href="{% url 'blog:blog_detail' blog.slug%}" >
+                                <h5 class="card-title">{{ blog.name }}</h5>
+                            </a>
+                            <p class="card-text">{{ blog.detail|safe|truncatewords:15 }}</p>
+                            <p class="card-text"><small class="text-muted">{{ blog.created_at|date:"j b Y  g:i A" }}</small></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+    </div>
     {% endfor %}
 {% endblock content %}

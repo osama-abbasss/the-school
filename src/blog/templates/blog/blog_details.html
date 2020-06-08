@@ -1,6 +1,31 @@
 {% extends 'base.html' %}
+{% load static %}
+{% block exstra_links %}
+<style>
+    .image {
+        background-image: url({% static 'image/osama.jpg' %});
+        background-size: cover;
+        min-height: 400px;
+    }
+</style>
+
+{% endblock exstra_links %}
 
 {% block content %}
 
-{{ blog.name}}
+<div class='row'>
+    <div class='col-12 col-md-4 image'>
+
+    </div>
+
+    <div class='col-12 col-md-8 mt-2'>
+        <h1>{{ blog.name }}</h1>
+        <hr>
+        <p>{{ blog.detail|safe }} </p>
+
+
+    </div>
+
+</div>
+
 {% endblock content %}
