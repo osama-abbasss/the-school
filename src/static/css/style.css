@@ -9,11 +9,12 @@
 }
 
 .student {
-    background-image: url("https://clic.es/teaching-english/wp-content/uploads/2014/10/Reading.jpg");
+    background-image: url('../image/s2.jpeg') ;
 }
 
 .teacher {
-    background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRWllRB223TkC5aMSVNuhh3W4ShpX3Vwe1iDgXSt0-HQh8AaZ42&usqp=CAU");
+    background-image: url('../image/t2.jpeg') ;
+
 }
 
 .father {

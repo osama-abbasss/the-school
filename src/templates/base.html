@@ -21,7 +21,7 @@
 
 <body>
   <nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color: #e3f2fd;">
-    <a class="navbar-brand" href="#">
+    <a class="navbar-brand" href="/">
       <img src="https://www.onlygfx.com/wp-content/uploads/2017/12/grunge-yes-no-icon-1-902x1024.png" width="30"
         height="30" class="d-inline-block align-top" alt="" loading="lazy">
       School
@@ -34,22 +34,32 @@
 
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
-          </li>
+
+
+          {% if request.user.userprofile.account_type == 'teacher' %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'groups:create_group' %}">create group</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'files:upload_file' %}">upload file</a>
+            </li>
+          
+          {% endif %}
+
+          
+          
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
               aria-haspopup="true" aria-expanded="false">
               contact me
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="#">linkedIn</a>
-              <a class="dropdown-item" href="#">facebook</a>
+              <a class="dropdown-item" href="https://www.linkedin.com/in/oabbass/">linkedIn</a>
+              <a class="dropdown-item" href="https://www.facebook.com/osama.abbasss">facebook</a>
+
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">Send Email</a>
+              <a class="dropdown-item" href="mailto:eng.oabbass@gmail.com">Send Email</a>
             </div>
           </li>
 
@@ -57,6 +67,12 @@
             <a class="nav-link" href="{% url 'blog:blog_list' %}">About Me</a>
           </li>
 
+
+          <li class="nav-item">
+              <a class="nav-link" href="{% url 'covid_19:all_counties' %}">covid 19</a>
+          </li>
+
+          
         </ul>
 
         <form class="form-inline my-2 my-lg-0 mr-auto" action='/serach/' method='post'> {% csrf_token %}
@@ -113,50 +129,52 @@
     <div class="footer-middle">
       <div class="container">
         <div class="row">
+
           <div class="col-md-3 col-sm-6">
             <!--Column1-->
             <div class="footer-pad">
-              <h4>Heading 1</h4>
+              <h4>my projects</h4>
               <ul class="list-unstyled">
                 <li><a href="#"></a></li>
-                <li><a href="#">Payment Center</a></li>
-                <li><a href="#">Contact Directory</a></li>
-                <li><a href="#">Forms</a></li>
-                <li><a href="#">News and Updates</a></li>
-                <li><a href="#">FAQs</a></li>
+                <li><a href="https://github.com/osama-abbasss/books-shop">E-commerce</a></li>
+                <li><a href="https://github.com/osama-abbasss/simple-spcial">social media</a></li>
+                <li><a href="https://github.com/osama-abbasss/simple-real-estate-site">real Estate site</a></li>
+                <li><a href="https://github.com/osama-abbasss/real-time-chat">real time chat</a></li>
+                <li><a href="https://github.com/osama-abbasss">and More</a></li>
               </ul>
             </div>
           </div>
+
           <div class="col-md-3 col-sm-6">
             <!--Column1-->
             <div class="footer-pad">
-              <h4>Heading 2</h4>
+              <h4>My skills</h4>
               <ul class="list-unstyled">
-                <li><a href="#">Website Tutorial</a></li>
-                <li><a href="#">Accessibility</a></li>
-                <li><a href="#">Disclaimer</a></li>
-                <li><a href="#">Privacy Policy</a></li>
-                <li><a href="#">FAQs</a></li>
-                <li><a href="#">Webmaster</a></li>
+                <li>Python</li>
+                <li>Django</li>
+                <li>Git & GitHub</li>
+                <li> Mysql</li>
+ 
               </ul>
             </div>
           </div>
+
+
           <div class="col-md-3 col-sm-6">
             <!--Column1-->
             <div class="footer-pad">
-              <h4>Heading 3</h4>
+              <h4>other skills</h4>
               <ul class="list-unstyled">
-                <li><a href="#">Parks and Recreation</a></li>
-                <li><a href="#">Public Works</a></li>
-                <li><a href="#">Police Department</a></li>
-                <li><a href="#">Fire</a></li>
-                <li><a href="#">Mayor and City Council</a></li>
-                <li>
-                  <a href="#"></a>
-                </li>
+                <li>html</li>
+                <li>css</li>
+                <li>bootstrap</li>
+                <li>js (Basics)</li>
+                <li>rest framwork (Basics)</li>
+                <li>JQ (Basics)</li>
               </ul>
             </div>
           </div>
+
           <div class="col-md-3">
             <h4>Contact Me</h4>
             <ul class="social-network social-circle">
@@ -167,7 +185,7 @@
         </div>
         <div class="row">
           <div class="col-md-12 copy">
-            <p class="text-center">&copy; Copyright 2018 - Company Name. All rights reserved.</p>
+            <p class="text-center">&copy; Copyright 2018 - osama abbas. All rights reserved.</p>
           </div>
         </div>
 

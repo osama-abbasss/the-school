@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'posts',
     'searches',
     'blog',
+    'covid_19'
 ]
 
 MIDDLEWARE = [

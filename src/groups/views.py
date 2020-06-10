@@ -15,15 +15,21 @@ def create_group(request):
         if request.method == "POST":
             form = GroupForm(request.POST)
             if form.is_valid():
-                group = form.save(commit=False)
-                group.auther = request.user
-                group.save()
-                member = GroupMember.objects.create(
-                    user=request.user, group=group)
-                member.save()
-                group.members.set = member
-                group.save()
-                return redirect('groups:group_details', group.slug)
+                try:
+                    group = form.save(commit=False)
+                    group.auther = request.user
+                    group.save()
+                    member = GroupMember.objects.create(
+                        user=request.user, group=group)
+                    member.save()
+                    group.members.set = member
+                    group.save()
+
+                    return redirect('groups:group_details', group.slug)
+                except:
+                    messages.info(request, 'name is aready used')
+                    return redirect("groups:create_group")
+
         else:
             form = GroupForm()
 

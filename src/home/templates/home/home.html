@@ -4,25 +4,133 @@
 My School
 {% endblock title %}
 
+{% block exstra_links %}
+<style>
+    .student,
+    .teacher {
+        opacity: .3;
+    }
+
+    li {
+        list-style-type: none;
+        margin-bottom: 1.2em;
+    }
+</style>
+{% endblock exstra_links %}
+
 {% block content %}
-        <div class="row">
-            <div class=" col-12 col-md-6 father">
+<div class="row ">
+    <div class=" col-12 col-md-6 father">
 
-                <div class="student"></div>
-                <div class="up">
-                    <center>
-                        <h2> soon </h2>
-                    </center>
-                </div>
-            </div>
-            <div class=" col-12 col-md-6 father">
-                <div class="teacher"></div>
-                <div class="up">
-                    <center>
-                        <h2> soon </h2>
-                    </center>
-                </div>
+        <div class="student"></div>
+        <div class="up mt-3">
+            <center>
+                <h2> what can you do here :</h2>
+            </center>
+            <ul>
+                <li class="text-primary">- <b class="text-danger">First</b> create your account
+                    <ul>
+                        <li class="text-body">
+                            > then <b class="text-danger"> complete your profile Bio</b>
+                        </li>
+                        <li class="text-body">
+                            > active your email
+                        </li>
+                        <li class="text-body">
+                            > search for your teachers by:
+                            <ul>
+                                <li>
+                                    - name
+                                </li>
+                                <li>
+                                    - school
+                                </li>
+                                <li>
+                                    - subject
+                                </li>
+                                <li>
+                                    - year
+                                </li>
+                                <li>
+                                    - his group name
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li class="text-primary">
+                    - <b class="text-danger">Jion</b> teacher's groups to read or shaere posts and comment in posts
+                    <ul>
+                        <li class="text-body">
+                            > you must Join to read the group content
 
-            </div>
+                        </li>
+                    </ul>
+                </li>
+                <li class="text-primary">
+                    - check your teacher files you will find it in his profile
+                </li>
+            </ul>
         </div>
+    </div>
+    <div class=" col-12 col-md-6 father">
+        <div class="teacher"></div>
+        <div class="up mt-3">
+            <center>
+                <h2> what can you do here :</h2>
+            </center>
+            <ul>
+                <li class="text-primary">- <b class="text-danger">First</b> create your account
+                    <ul>
+                        <li class="text-body">
+                            > then <b class="text-danger"> complete your profile Bio</b>
+                        </li>
+                        <li class="text-body">
+                            > active your email
+                        </li>
+                        <li class="text-body">
+                            > search for other teachers or students by:
+                            <ul>
+                                <li>
+                                    - name
+                                </li>
+                                <li>
+                                    - school
+                                </li>
+                                <li>
+                                    - subject
+                                </li>
+                                <li>
+                                    - year
+                                </li>
+                                <li>
+                                    - his group name (not available for student)
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="text-primary">
+                    - <b class="text-danger">creat, join orr delete</b>groups to read or shaere posts and comment in
+                    posts
+                    <ul>
+                        <li class="text-danger">
+                            > you have permission to remove any one in your group
+                        </li>
+                    </ul>
+                </li>
+                <li class="text-primary">
+                    - upload files for anyone
+                    <ul>
+                        <li class="text-body">
+                            it will be available for any one open your profile
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+</div>
 {% endblock content %}

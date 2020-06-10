@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block title %} {{ user.first_name}} {{user.last_name }} {% endblock %}
+
 {% block exstra_links %}
     <link rel="stylesheet" href="{% static 'css/profile.css' %}">
 {% endblock  %}

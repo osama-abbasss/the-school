@@ -13,6 +13,7 @@ urlpatterns = [
     path('post/', include('posts.urls', namespace='posts')),
     path('serach/', include('searches.urls', namespace='searches')),
     path('blog/', include('blog.urls', namespace='blog')),
+    path('covid-19/', include('covid_19.urls', namespace='covid'))
 ]
 
 

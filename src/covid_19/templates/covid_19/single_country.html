@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+{% block title %} {{country.Country}} {% endblock %}
+
+{% block exstra_links %}
+<style>
+    .center {
+        width: 50%;
+        margin: 0 auto;
+    }
+    .search_not_found{
+    margin: 10px auto;
+
+    }
+
+    .search_not_found h3{
+        color: #2F7DFC
+    }
+    ul {
+        list-style-type: none;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+
+
+{% if country != 'not founed' %}
+
+<div class='container'>
+        
+    <div class="card mt-2" style= "margin: 0 auto; width: 80%">
+        <div class="card-header">
+            <center> <b> {{country.Country}} </b> </center>
+        </div>
+        
+        <ul class="list-group list-group-flush">
+            
+            <li class="list-group-item bg-secondary">
+                <span class="text-light" >Total Confirmed : </span>
+                <span class="float-right text-light" >{{ country.TotalConfirmed }} </span>
+            </li>
+
+
+            <li class="list-group-item  bg-dark">
+                <span class="text-danger" >Total Deathes : </span>
+                <span class="float-right text-danger" >{{ country.TotalDeaths }} </span>
+            </li>
+
+            <li class="list-group-item  bg-success ">
+                <span class="text-light" >Total Recovered : </span>
+                <span class="float-right text-light" >{{ country.TotalRecovered }} </span>
+            </li>
+            
+
+            <li class="list-group-item bg-secondary">
+                <span class="text-light" >New Confirmed : </span>
+                <span class="float-right text-light" >{{ country.NewConfirmed }} </span>
+            </li>
+
+            
+            <li class="list-group-item bg-dark">
+                <span class="text-danger" >New Deaths : </span>
+                <span class="float-right text-danger" >{{ country.NewDeaths }} </span>
+            </li>
+
+            <li class="list-group-item bg-success ">
+                <span class="text-light" >New Recovered : </span>
+                <span class="float-right text-light" >{{ country.NewRecovered }} </span>
+            </li>
+
+            <li class="list-group-item"> Last Update :
+                <span class="float-right" >{{ country.Date }} </span>
+            </li>
+        
+        </ul>
+        
+    </div>
+</div>
+{% else %}
+
+    <div class="container">
+        <div class='search_not_found mb-3'>
+            <p > Your search - <h3>{{q}}</h3>- did not match any documents.</p>
+            
+            <br>
+            <h3>Suggestions:</h3>
+            <ul>
+                <li class='m-3'>- Make sure that all words are spelled correctly.<li>
+                <li class='m-3'>- Try different keywords.<li>
+                <li class='m-3'>- Try more general keywords.<li>
+            </ul>
+
+
+        </div>
+    </div>
+
+{% endif %}
+
+
+    
+    
+{% endblock content %}
