@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %} {{q}} {% endblock %}
 
@@ -27,81 +28,71 @@
 
 <!--   profile     -->
 {% if profiles %}
-<center>
-    <h3 class="text-light bg-dark"> profiles </h3>
-</center>
+    <center>
+        <h3 class="text-light bg-dark"> profiles </h3>
+    </center>
+                                
+                                
+    <div class="container">
+        {% for profile in profiles %}
+        <div class="card mb-3 border border-white" style="max-width: 540px;">
+            <div class="row no-gutters">
 
-<div class="container">
-    {% for profile in profiles %}
-    <div class="card mb-3 border border-white" style="max-width: 540px;">
-        <div class="row no-gutters">
-            <div class="col-md-4">
-                <img src="{{ profile.image.url }}" class="card-img rounded-circle" alt="...">
-            </div>
-            <div class="col-md-8">
-                <div class="card-body">
-                    <h5 class="card-title"><a href="{% url 'account:profile' profile.user.username %}">
-                            {{ profile.user.first_name }} {{ profile.user.flast_name }}</a></h5>
+                {% if profile.image %}
+                    <div class="col-md-4">
+                        <img src="{{ profile.image.url }}" class="card-img rounded-circle" alt="...">
+                    </div>
+                {% else %}
+                    <div class="col-md-4">
+                        <img src="{% static 'image/profile.png' %}" class="card-img rounded-circle" alt="...">
+                    </div>
+                {% endif %}
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title"><a href="{% url 'account:profile' profile.user.username %}">
+                                {{ profile.user.first_name }} {{ profile.user.flast_name }}</a></h5>
+                    </div>
                 </div>
             </div>
         </div>
+        {% endfor %}
     </div>
-    {% endfor %}
-</div>
-{% elif users %}
-<div class="container">
-    {% for user in users %}
-    <div class="card mb-3 border border-white" style="max-width: 540px;">
-        <div class="row no-gutters">
-            <div class="col-md-4">
-                <img src="{{ user.userprofile.image.url }}" class="card-img rounded-circle" alt="...">
-            </div>
-            <div class="col-md-8">
-                <div class="card-body">
-                    <h5 class="card-title"><a href="{% url 'account:profile' user.username %}">
-                            {{ user.first_name }} {{ user.last_name }}</a></h5>
-                </div>
-            </div>
-        </div>
-    </div>
-    {% endfor %}
-</div>
 
 {% endif %}
 
 <!--   group     -->
 {% if groups %}
-<center>
-    <h3 class="text-light bg-dark"> groups </h3>
-</center>
+    <center>
+        <h3 class="text-light bg-dark"> groups </h3>
+    </center>
 
-<div class="container">
-    {% for group in groups %}
-    <div class="card border-success center">
-        <div class="card-body">
-            <h5 class="card-title">{{ group.name }}</h5>
-            <p class="card-text">{{ group.description }}</p>
+    <div class="container">
+        {% for group in groups %}
+            <div class="card border-success center">
+                <div class="card-body">
+                    <h5 class="card-title">{{ group.name }}</h5>
+                    <p class="card-text">{{ group.description }}</p>
 
-            {% if request.user in group.members.all %}
-            <a href="{% url 'groups:group_details' group.slug %}" class="btn btn-primary">enter</a>
-            {% else %}
-            <a href="{% url 'groups:join_group' group.slug %}" class="btn btn-primary">join</a>
-            {% endif %}
+                    {% if request.user in group.members.all %}
+                    <a href="{% url 'groups:group_details' group.slug %}" class="btn btn-primary">enter</a>
+                    {% else %}
+                    <a href="{% url 'groups:join_group' group.slug %}" class="btn btn-primary">join</a>
+                    {% endif %}
 
-            {% if group.auther == request.user %}
-            <a href="{% url 'groups:delete_group' group.slug %}" class="btn btn-primary">delete</a>
-            {% endif %}
-        </div>
-        <div class="card-footer">
-            <small class="text-muted">students : {{ group.members.count }}</small>
-        </div>
+                    {% if group.auther == request.user %}
+                    <a href="{% url 'groups:delete_group' group.slug %}" class="btn btn-primary">delete</a>
+                    {% endif %}
+                </div>
+                <div class="card-footer">
+                    <small class="text-muted">students : {{ group.members.count }}</small>
+                </div>
+            </div>
+            <br>
+        {% endfor %} 
     </div>
-    <br>
-    {% endfor %}
-    {% endif %}
-</div>
+{% endif %}
 
-{% if not users and not groups and not profiles %}
+{% if not users and not profiles %}
     <div class="container">
         <div class='search_not_found mb-3'>
             <p > Your search - <h3>{{q}}</h3>- did not match any documents.</p>
